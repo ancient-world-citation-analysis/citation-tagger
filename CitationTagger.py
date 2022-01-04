@@ -1,10 +1,7 @@
 import torch
 import torch.nn as nn
-import pandas as pd
-import numpy as np
 import re
-import random
-from gensim.models import FastText
+from gensim.models import Word2Vec
 
 class BiLSTM_Alt(nn.Module):
     def __init__(self, tag_to_ix, embedding_dim, hp_dict):

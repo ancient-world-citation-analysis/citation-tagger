@@ -1,8 +1,14 @@
+# Intro
+
 This repository is a citation tagger tool built using Pytorch and Gensim's Word2Vec. What it does is very simple:
 
 For every word in a citation entry, outputs whether it is part of Author(A), Date(D), Title(T), and Other(O).
 
 This is part of a bigger project called [Ancient World Computational Analysis](https://digitalhumanities.berkeley.edu/ancient-world-computational-analysis-awca).
+
+# Installation and Requirments
+
+``pip install -r requirements.txt`` should suffice.
 
 # Fast Usage Tips
 
