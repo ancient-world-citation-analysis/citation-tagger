@@ -8,7 +8,10 @@ This is part of a bigger project called [Ancient World Computational Analysis](h
 
 # Installation and Requirments
 
-``pip install -r requirements.txt`` should suffice.
+PyTorch and Gensim is required, ``pip install -r requirements.txt`` should suffice.
+
+Put all of the files in this repository in the same directory of the files that will refer
+this code.
 
 # Fast Usage Tips
 
