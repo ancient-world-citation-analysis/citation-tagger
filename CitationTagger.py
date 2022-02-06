@@ -64,50 +64,6 @@ class BiLSTM_Alt(nn.Module):
         y_hat = X
         return y_hat
 
-    def loss(self, y_hat, y, X_lengths):
-        y = y.view(-1)
-        y_hat = y_hat.view(-1, self.tagset_size)
-
-        mask = (y != PAD_VALUE_LABEL)
-
-        y_masked = y[mask]
-        y_hat_masked = y_hat[mask]
-
-        return F.nll_loss(y_hat_masked, y_masked)
-
-    def get_batch_confusion_matrix(self, y_hat, y, X_lengths):
-        mtrx = torch.zeros((4, 4), dtype = torch.long).to(device)
-        y = y.view(-1)
-        y_hat = y_hat.view(-1, 4)
-
-        predicted = y_hat.argmax(dim = 1)
-
-        mask = (y != PAD_VALUE_LABEL)
-
-        y_masked = y[mask]
-        predicted_masked = predicted[mask]
-
-        for idx in range(y_masked.numel()):
-            expected, output = y_masked[idx], predicted_masked[idx]
-            mtrx[expected, output] += 1
-
-        return mtrx
-    
-    def get_confusion_matrix(self, test_loader, verbose = True):
-        mtrx = torch.zeros((4, 4), dtype = torch.long).to(device)
-        with torch.no_grad():
-            model.eval()
-            for idx, (data, lengths, labels) in enumerate(test_loader):
-                data = data.to(device)
-                labels = labels.to(device)
-                lengths = lengths.cpu()
-                y_hat = model(data, lengths)
-                mtrx += self.get_batch_confusion_matrix(y_hat, labels, lengths)
-                if verbose and idx % (len(test_loader) // 10) == 0:
-                    print(f"{round(100 * idx / len(test_loader))}%")
-        model.train()
-        return mtrx
-
 default_hp_dict = {"hidden_dim" : 40, "num_layers" : 1}
 default_embedding_path = "word2vec_embedding.embed"
 default_nn_path = "lstm_alt3_weights.pth"
