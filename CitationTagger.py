@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import re
 from gensim.models import Word2Vec
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+import torch.nn.functional as F
 
 class BiLSTM_Alt(nn.Module):
     def __init__(self, tag_to_ix, embedding_dim, hp_dict):
@@ -153,8 +155,8 @@ class CitationTagger():
         '''
         Prepares a single sentence sequence to be analyzed.
         '''
-        idxs = [torch.Tensor(embedding_model.wv[w]) if w in embedding_model.wv
-        else torch.randn(embedding_model.wv[0].shape[0])
+        idxs = [torch.Tensor(self.embedding_model.wv[w]) if w in self.embedding_model.wv
+        else torch.randn(self.embedding_model.wv[0].shape[0])
         for w in seq]
         return torch.vstack(idxs)
 
